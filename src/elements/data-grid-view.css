@@ -1,0 +1,42 @@
+.table th *{
+    vertical-align: middle
+}
+
+.move-column{
+    background: #fff;
+    position: absolute;
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    top: 74px;
+    padding: 0 .5rem;
+    box-shadow: 0 0 3px gray;
+}
+
+.table-container.dragging th:hover{
+    background: gray;
+}
+
+.table tr.filter{
+    background: #2f5e2d69;
+}
+
+.move-scroll {
+    position: fixed;
+    top: 50%;
+    padding: .5rem;
+    background: #2f5e2d;
+    border-radius: 50%;
+    color: white;
+    box-shadow: 0 0 3px black;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.move-scroll.rigth{
+    right: 2rem;
+}
+.move-scroll.left{
+    left: calc(300px + 2rem);
+}

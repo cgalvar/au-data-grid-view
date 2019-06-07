@@ -1,0 +1,32 @@
+<template>
+    
+    <require from="../../attributes/selectable/selectable"></require>
+    
+    <thead>
+    
+        <tr>
+    
+            <th 
+                repeat.for="column of columns" 
+                selectable='record.bind: column; event-name.bind: "dragcolumn"' 
+                mouseover.delegate="hoverReorder(column)">
+    
+                <span>
+                    ${column.name}
+                </span>
+    
+                <span class="move-column" 
+                    css="left: ${spanPositionX}px" 
+                    if.bind="columnSelected == column">${column.name}</span>
+    
+                <span class="actions">
+                    <i class="material-icons">keyboard_arrow_down</i>
+                    <i class="material-icons" click.delegate="deleteColumn(column)">clear</i>
+                </span>
+    
+            </th>
+    
+        </tr>
+    
+        <thead>
+</template>

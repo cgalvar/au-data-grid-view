@@ -1,0 +1,191 @@
+<template>
+    
+    <require from="../../attributes/selectable/selectable"></require>
+    <require from="../../value-converters/datarow"></require>
+    <require from="./data-grid-view.css"></require>
+    <require from="../../elements/toggle-button/toggle-button"></require>
+
+    <div class="table-container ${columnSelected?'dragging':''}" ref="tableContainer">
+        
+            <table class="table">
+                
+                <thead>
+                
+                    <tr>
+                
+                        <th repeat.for="column of columns" selectable='record.bind: column; event-name.bind: dragcolumnEventName' mouseover.delegate="hoverReorder(column)">
+                
+                            <span>
+                                ${column.name}
+                            </span>
+                
+                            <span class="move-column" 
+                                css="left: ${$parent.spanPositionX}px" 
+                                if.bind="$parent.columnSelected == column">${column.name}</span>
+                            
+                            <span class="actions">
+                                <span show.bind="column.orderBy">
+                                    <i class="material-icons" 
+                                        click.delegate="_onOrderBy(column, 'desc')"
+                                        if.bind="orderByType == 'asc' && $parent.orderColumnSelected == column"
+                                        >
+                                        keyboard_arrow_up
+                                    </i>
+                                    <i class="material-icons"
+                                        click.delegate="_onOrderBy(column, 'asc')"
+                                        if.bind="$parent.orderColumnSelected != column"
+                                    >
+                                        remove
+                                    </i>
+                                    <i class="material-icons"
+                                        click.delegate="_onOrderBy(column, '')"
+                                        if.bind="orderByType == 'desc' && $parent.orderColumnSelected == column"
+                                    >
+                                        keyboard_arrow_down
+                                    </i>
+                                </span>
+                                <i class="material-icons" click.delegate="deleteColumn(column)">clear</i>
+                            </span>
+                
+                        </th>
+                
+                    </tr>
+                
+                    <thead>
+        
+                <tbody>
+    
+                <!-- Filter ##################### -->
+    
+                    <tr class="filter">
+    
+                        <td repeat.for="column of columns">
+                            
+                            <div show.bind="column.enableFilter">
+
+                                <input type="text" 
+                                    if.bind="column.inputType == 'text'" 
+                                    class="input-border" value.bind="column.value" 
+                                    input.delegate='column.onFilter(column.value)'>
+        
+                                <select 
+                                    if.bind="column.inputType == 'select'" 
+                                    value.bind="column.value" change.delegate='column.onFilter(column.value)' 
+                                    class="input-border">
+                                    
+                                    <option value="" if.bind="column.allOption">Todos</option>
+        
+                                    <option if.bind="column.selectOptions && column.optionPropertyKey"
+                                        model.bind="option.id"
+                                        repeat.for="option of column.selectOptions"
+                                        >
+        
+                                            ${option[column.optionPropertyKey || "nombre"]}
+                                                                       
+                                    </option>
+        
+                                    <option if.bind="column.selectOptions && column.getOptionValue" 
+                                        model.bind="option.id" 
+                                        repeat.for="option of column.selectOptions">
+                                    
+                                            ${column.getOptionValue(option)}        
+                                    
+                                    </option>
+        
+                                    <option 
+                                        if.bind="column.getSelectOptions && column.optionPropertyKey" 
+                                        model.bind="option.id" 
+                                        repeat.for="option of column.getSelectOptions()"
+                                    >
+                                    
+                                        ${option[column.optionPropertyKey || "nombre"]}
+                                                       
+                                    </option>
+                                    
+                                    <option 
+                                         if.bind="column.getSelectOptions && column.getOptionValue" 
+                                         model.bind="option.id" 
+                                         repeat.for="option of column.getSelectOptions()"
+                                    >
+                                        
+                                        ${column.getOptionValue(option)}                              
+        
+                                    </option>
+                                
+                                </select>
+        
+                                <span class="input-action disabled" if.bind="column.inputType == 'inputAction'">
+                                    <input type="text" value="${column.value}" disabled />
+                                    <i class="material-icons action-button" click.delegate="column.onFilter()">search</i>
+                                </span>
+        
+                                <toggle-button 
+                                    if.bind="column.inputType == 'toggle-button'"
+                                    checked.bind="column.value"
+                                    change.delegate = 'column.onFilter(column.value)'
+                                    >
+        
+                                </toggle-button>
+                            </div>
+                        
+    
+                        </td>
+    
+                    </tr>
+    
+                <!-- End Filter ##################### -->
+    
+                    <tr 
+                        repeat.for="row of rows" 
+                        click.delegate="_clickRow(row)"
+                        
+                        selectable = "one-at-time: true; record.bind: row; event-name.bind: rowSelectedEventName"
+                        >
+    
+                        <td repeat.for="column of columns">
+    
+                            <span if.bind="column.getValue">
+                                ${column.getValue(row) | dataRow:column.valueConverter:column.valueConverterParams}
+                            </span>
+    
+                            <span if.bind="column.propertyKey && !column.getValue">
+                                ${row[column.propertyKey] | dataRow:column.valueConverter:column.valueConverterParams}
+                            </span>
+    
+    
+                            <span if.bind="column.multipleValues">
+    
+                                <span repeat.for="value of row[column.multipleValues]">
+                                    ${value[column.propertyKey] | dataRow:column.valueConverter:column.valueConverterParams}
+                                </span>
+    
+                            </span>
+    
+                        </td>
+    
+                    </tr>
+    
+    
+                </tbody>
+            </table>
+
+            <i 
+                click.delegate="moveScroll(tableContainer, 'left')"
+                 if.bind="arrowMove"
+                class="material-icons move-scroll left">
+                navigate_before
+            </i>
+            <i 
+                click.delegate="moveScroll(tableContainer, 'rigth')" 
+                if.bind="arrowMove"
+                class="material-icons move-scroll rigth">
+                navigate_next
+            </i>
+
+
+
+    </div>
+    
+        
+    
+</template>
