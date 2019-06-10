@@ -95,5 +95,10 @@
       "text",
       "html"
     ]
+  },
+  "dependencies": {
+    "@cgalvar/au-selectable": "git+https://github.com/cgalvar/cgalvar-au-selectable.git",
+    "@cgalvar/au-some-value-converters": "git+https://github.com/cgalvar/aurelia-simple-value-converters.git",
+    "@cgalvar/au-toggle-button": "git+https://github.com/cgalvar/cgalvar-au-toggle-button.git"
   }
 }

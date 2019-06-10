@@ -14,5 +14,5 @@ export interface ColumnDefinition{
     getOptionValue?: Function;
     allOption?: boolean;
     orderBy?: boolean;
-    enableFilter?:boolean;
+    disableFilter?:boolean;
 }

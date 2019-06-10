@@ -14,8 +14,11 @@ export class DataGridView extends DataGridHead{
 
     onSelectRowSubscription: Subscription;
     onMouseUpSubscription: Subscription;
-    
+
+    // settings
+    @bindable enableFilter = false;
     @bindable arrowMove = false;
+
 
     @bindable columns:any[];
     @bindable rows:any[];
@@ -39,8 +42,7 @@ export class DataGridView extends DataGridHead{
 
     @bindable({ defaultBindingMode: bindingMode.twoWay })
     orderByType;
-
-    private orderColumnSelected;
+    orderColumnSelected: any;
 
     constructor(events: EventAggregator){
         super(events);

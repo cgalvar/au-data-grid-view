@@ -40,3 +40,55 @@
 .move-scroll.left{
     left: calc(300px + 2rem);
 }
+
+.table{
+    text-align: center;
+    white-space: nowrap;
+	table-layout: fixed;
+	min-width: 100%;
+}
+
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.table td{
+	text-align: center;
+	padding: .5rem;
+}
+
+.table tr:nth-child(even){
+	background: rgba(128, 128, 128, 0.15);
+}
+
+.table-container{
+    /* padding: .25rem; */
+	overflow-x: auto;
+	user-select: none;
+	height: 98%;
+}
+
+.table thead{
+	background: #b1b0b0;
+}
+
+.table thead th{
+	padding: .5rem;
+}
+
+tr{
+	transition: .3s all;
+	cursor: pointer;
+}
+
+
+.table tr.active{
+	background: #469800;
+    color: white;
+}
+
+tr.selected{
+	background: #d8d8d8 !important;
+	color: black !important;
+}

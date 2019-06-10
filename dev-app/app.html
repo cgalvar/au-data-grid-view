@@ -6,7 +6,10 @@
 
   <hr>
   <h2>Custom element "hello-world"</h2>
-  <p>Usage:&nbsp;<code>&lt;hello-world message.bind="message"&gt;&lt;/hello-world&gt;</code></p>
-  <hello-world message.bind="message"></hello-world>
+  <p>Usage:&nbsp;<code>&lt;data-grid-view columns.bind="myColumns" rows.bind="myRows"&gt;&lt;/data-grid-view&gt;</code></p>
+  
+  <data-grid-view view-model.ref="dataGrid" columns.bind="columns" rows.bind="rows">
+
+  </data-grid-view>
 
 </template>

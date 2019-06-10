@@ -1,9 +1,8 @@
 <template>
     
-    <require from="../../attributes/selectable/selectable"></require>
-    <require from="../../value-converters/datarow"></require>
-    <require from="./data-grid-view.css"></require>
-    <require from="../../elements/toggle-button/toggle-button"></require>
+
+    <require as=" " from="./data-grid-view.css"></require>
+
 
     <div class="table-container ${columnSelected?'dragging':''}" ref="tableContainer">
         
@@ -57,11 +56,11 @@
     
                 <!-- Filter ##################### -->
     
-                    <tr class="filter">
+                    <tr class="filter" show.bind="enableFilter">
     
                         <td repeat.for="column of columns">
                             
-                            <div show.bind="column.enableFilter">
+                            <div show.bind="!column.disableFilter">
 
                                 <input type="text" 
                                     if.bind="column.inputType == 'text'" 

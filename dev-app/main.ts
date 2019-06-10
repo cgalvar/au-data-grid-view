@@ -14,5 +14,9 @@ export function configure(aurelia: Aurelia) {
     aurelia.use.plugin('aurelia-testing');
   }
 
+  aurelia.use.plugin('@cgalvar/au-selectable')
+  .plugin('@cgalvar/au-some-value-converters')
+  .plugin('@cgalvar/au-toggle-button')
+
   aurelia.start().then(() => aurelia.setRoot());
 }
