@@ -11,5 +11,5 @@ export function configure(config: FrameworkConfiguration) {
 
 }
 
-export {DataGridView} from 'elements/data-grid-view';
-export {ColumnDefinition} from 'elements/column-definition'
+export {DataGridView} from './elements/data-grid-view';
+export {ColumnDefinition} from './elements/column-definition'
