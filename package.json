@@ -1,5 +1,5 @@
 {
-  "name": "aurelia-data-grid-view",
+  "name": "@cgalvar/au-data-grid-view",
   "description": "An Aurelia plugin project.",
   "version": "0.1.0",
   "repository": {
