@@ -18,7 +18,7 @@ export class DataGridView extends DataGridHead{
     // settings
     @bindable enableFilter = false;
     @bindable arrowMove = false;
-
+    @bindable enableCloseColumns = false;
 
     @bindable columns:any[];
     @bindable rows:any[];
