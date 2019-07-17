@@ -92,3 +92,8 @@ tr.selected{
 	background: #d8d8d8 !important;
 	color: black !important;
 }
+
+tr.selectable-selected{
+    transform: scale(0.995);
+    background: #b7b7b7 !important;
+}

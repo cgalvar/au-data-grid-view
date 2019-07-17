@@ -23,7 +23,10 @@ export class App {
     }
   ]
 
-  rows = [{nombre: 'julio', apellido: 'gonzalez'}]
+  rows = [
+    {nombre: 'julio', apellido: 'gonzalez'},
+    {nombre: 'julio', apellido: 'gonzalez'},
+  ]
   dataGrid: DataGridView;
 
   attached(){
@@ -32,6 +35,14 @@ export class App {
 
   setDataGrid(){
     this.dataGrid.enableFilter = true;
+  }
+
+  rowSelected(row){
+    alert(`selected ${row.nombre}`)
+  }
+
+  rowDiselected(row){
+    alert(`diselected ${row.nombre}`)
   }
 
 }

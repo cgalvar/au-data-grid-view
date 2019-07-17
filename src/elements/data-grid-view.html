@@ -12,7 +12,7 @@
                 
                     <tr>
                 
-                        <th repeat.for="column of columns" selectable='record.bind: column; event-name.bind: dragcolumnEventName' mouseover.delegate="hoverReorder(column)">
+                        <th repeat.for="column of columns">
                 
                             <span>
                                 ${column.name}
@@ -138,7 +138,12 @@
                         repeat.for="row of rows" 
                         click.delegate="_clickRow(row)"
                         
-                        selectable = "one-at-time: true; record.bind: row; event-name.bind: rowSelectedEventName"
+                        selectable = "
+                            one-at-time.one-time: oneRowAtTime;
+                            group-name.one-time: groupName;
+                            on-select.call: onSelect({row:row});
+                            on-diselect.call: onDiselect({row:row})
+                        "
                         >
     
                         <td repeat.for="column of columns">

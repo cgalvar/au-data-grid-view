@@ -2,6 +2,7 @@ import { bindable, autoinject, bindingMode } from "aurelia-framework";
 import { EventAggregator, Subscription } from "aurelia-event-aggregator";
 import { DataGridHead } from "./data-grid-head";
 import { ColumnDefinition } from "./column-definition";
+import { SelectableHelper } from "@cgalvar/au-selectable";
 
 var instances = 0;
 
@@ -19,7 +20,12 @@ export class DataGridView extends DataGridHead{
     @bindable enableFilter = false;
     @bindable arrowMove = false;
     @bindable enableCloseColumns = false;
+    @bindable oneRowAtTime = false;
 
+    @bindable settings: dataGridSettings;
+
+
+    // Data
     @bindable columns:any[];
     @bindable rows:any[];
 
@@ -43,17 +49,25 @@ export class DataGridView extends DataGridHead{
     @bindable({ defaultBindingMode: bindingMode.twoWay })
     orderByType;
     orderColumnSelected: any;
+    private groupName: string;
 
-    constructor(events: EventAggregator){
+    constructor(events: EventAggregator, private selectableHelper:SelectableHelper){
         super(events);
         instances++;
         this.identifier = instances;
+        this.groupName = `data-grid-view-${this.identifier}`;
         this.rowSelectedEventName = `rowselected${this.identifier}`;
         this.dragcolumnEventName = `dragcolumn${this.identifier}`;
     }
 
+    settingsChanged(){
+        this.arrowMove = this.settings.arrowMove;
+        this.enableCloseColumns = this.settings.enableCloseColumns;
+        this.enableFilter = this.settings.enableFilter;
+    }
+
     _onOrderBy(column:ColumnDefinition, type){
-        debugger;
+        
         if(type == ''){
             this.orderByColumn == '';
             this.orderColumnSelected = null;
@@ -71,41 +85,25 @@ export class DataGridView extends DataGridHead{
 
     }
 
-    rowDiselectChanged(){
-        debugger;
-        if(this.rowDiselect){
-            this.events.publish(`selectable.rowselected${this.identifier}.clear`);
-            //this.rowDiselect = false;
-        }
-    }
-
     attached(){
         this.listenSelectable();
-    }
-
-    listenSelectable() {
-
-        super.listenSelectable();
-        
-        this.onSelectRowSubscription = this.events.subscribe(`selectable.rowselected${this.identifier}`, (record) => {
-            if(this.rowSelected){
-                this.rowSelected({row:record});
-            }
-
-        })
-
-        this.onSelectRowSubscription = this.events.subscribe(`selectable.rowselected${this.identifier}.onDiselect`, (record) => {
-            if(this.rowDiselected){
-                this.rowDiselected({ row: record });
-            }
-
-        })
-
     }
 
     private _clickRow(row){
         if (this.clickRow) {
             this.clickRow({row:row});
+        }
+    }
+
+    private onDiselect(row){
+        if (this.rowDiselected) {
+            this.rowDiselected(row)
+        }
+    }
+
+    private onSelect(row){
+        if (this.rowSelected) {
+            this.rowSelected(row)
         }
     }
 
@@ -124,4 +122,15 @@ export class DataGridView extends DataGridHead{
         element.scrollTo(scroll, 0);
     }
 
+    clearSelections(){
+        this.selectableHelper.clearGroup(this.groupName);
+    }
+
+}
+
+export interface dataGridSettings {
+    enableFilter: boolean;
+    arrowMove: boolean;
+    enableCloseColumns: boolean;
+    oneRowAtTime: boolean;
 }

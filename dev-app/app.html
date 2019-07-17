@@ -8,8 +8,25 @@
   <h2>Custom element "hello-world"</h2>
   <p>Usage:&nbsp;<code>&lt;data-grid-view columns.bind="myColumns" rows.bind="myRows"&gt;&lt;/data-grid-view&gt;</code></p>
   
-  <data-grid-view view-model.ref="dataGrid" columns.bind="columns" rows.bind="rows">
+  <data-grid-view view-model.ref = 'dataGrid' 
+    row-selected.call = 'rowSelected(row)' 
+    row-diselected.call = 'rowDiselected(row)'
+    columns.bind="columns" rows.bind="rows">
 
   </data-grid-view>
+
+  <button click.delegate="dataGrid.clearSelections()">
+    clear!
+  </button>
+
+  <data-grid-view view-model.ref = 'dataGrid2' columns.bind="columns" rows.bind="rows">
+
+  </data-grid-view>
+
+  <br>
+
+  <button click.delegate="dataGrid2.clearSelections()">
+    clear!
+  </button>
 
 </template>
